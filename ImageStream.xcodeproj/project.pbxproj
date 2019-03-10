@@ -10,6 +10,7 @@
 		B5E0849B22355E120081D49F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0849A22355E120081D49F /* AppDelegate.swift */; };
 		B5E0849D22355E130081D49F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5E0849C22355E130081D49F /* Assets.xcassets */; };
 		B5E084A022355E130081D49F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E0849E22355E130081D49F /* MainMenu.xib */; };
+		B5E084AB22355ED70081D49F /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E084AA22355ED70081D49F /* ImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		B5E0849F22355E130081D49F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		B5E084A122355E130081D49F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5E084A222355E130081D49F /* ImageStream.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ImageStream.entitlements; sourceTree = "<group>"; };
+		B5E084AA22355ED70081D49F /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 				B5E0849E22355E130081D49F /* MainMenu.xib */,
 				B5E084A122355E130081D49F /* Info.plist */,
 				B5E084A222355E130081D49F /* ImageStream.entitlements */,
+				B5E084AA22355ED70081D49F /* ImageView.swift */,
 			);
 			path = ImageStream;
 			sourceTree = "<group>";
@@ -92,6 +95,11 @@
 				TargetAttributes = {
 					B5E0849622355E120081D49F = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -130,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5E084AB22355ED70081D49F /* ImageView.swift in Sources */,
 				B5E0849B22355E120081D49F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,7 +276,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ImageStream/ImageStream.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 685257RUQP;
@@ -286,7 +294,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = ImageStream/ImageStream.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 685257RUQP;
