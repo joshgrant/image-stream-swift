@@ -16,49 +16,70 @@ class ImageView : NSView
     var timer : Timer?
     var loopCount: Int = 0
     
-    required init?(coder decoder: NSCoder) {
-        super.init(coder: decoder)
-    }
-    
-    func image(number: Int) -> NSImage?
-    {
-        return NSImage(byReferencingFile: "/Users/formaze/Downloads/image_\(number).jpg")
-    }
+    var images: [NSImage] = []
     
     override func awakeFromNib()
     {
         super.awakeFromNib()
+        
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        
+        guard let window = window else { return }
+        
+        panel.beginSheetModal(for: window) { (result) in
+            if result == .OK
+            {
+                guard let folder = panel.urls.first else { return }
+                
+                let fileManager = FileManager.default
+                
+                do {
+                    let contents = try fileManager.contentsOfDirectory(atPath: folder.path)
+                    
+                    let urls = contents.map {
+                        return folder.appendingPathComponent($0)
+                    }
+                    
+                    self.loadImages(from: urls)
+                    
+                } catch {
+                    print("None")
+                }
+            }
+        }
+    }
+    
+    func loadImages(from urls: [URL]) {
+        var tempImages: [NSImage] = []
+        for url in urls {
+            let image = loadImage(from: url)
+            tempImages.append(image)
+        }
+        images = tempImages
         fireTimer()
+    }
+    
+    func loadImage(from url: URL) -> NSImage {
+        let image = NSImage(byReferencing: url)
+        return image
     }
     
     @objc func updateLoop(timer: Timer)
     {
         loopCount += 1
         
-        if loopCount > 27 {
-            loopCount = 1
+        if loopCount >= images.count {
+            loopCount = 0
         }
-        
-        updateImage(i: loopCount)
-    }
-    
-    func updateImage(i: Int)
-    {
-        imageView.image = image(number: i)
+                
+        imageView.image = images[loopCount]
     }
     
     func fireTimer()
     {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateLoop(timer:)), userInfo: nil, repeats: true)
-    }
-    
-    @IBAction func buttonPressed(button: NSButton)
-    {
-        if (timer?.isValid ?? false) {
-            timer?.invalidate()
-            timer = nil
-        } else {
-            fireTimer()
-        }
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateLoop(timer:)), userInfo: nil, repeats: true)
     }
 }
