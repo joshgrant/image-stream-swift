@@ -686,11 +686,11 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="400" height="300"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1120"/>
-            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ" customClass="ImageView" customModule="ImageStream" customModuleProvider="target">
+            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ" customClass="View" customModule="ImageStream" customModuleProvider="target">
                 <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <imageView horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" placeholderIntrinsicWidth="400" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="jos-eN-Av3">
+                    <imageView horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" placeholderIntrinsicWidth="400" placeholderIntrinsicHeight="300" translatesAutoresizingMaskIntoConstraints="NO" id="jos-eN-Av3" customClass="ImageView" customModule="ImageStream" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="300"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="5ve-Vq-Tl9"/>
                     </imageView>
@@ -705,7 +705,7 @@
                     <outlet property="imageView" destination="jos-eN-Av3" id="cNc-ek-uoS"/>
                 </connections>
             </view>
-            <point key="canvasLocation" x="138" y="413.5"/>
+            <point key="canvasLocation" x="127" y="463"/>
         </window>
     </objects>
 </document>

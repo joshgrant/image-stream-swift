@@ -7,20 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		030830182393C3DE008052BE /* CGImagePropertyOrientation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030830172393C3DE008052BE /* CGImagePropertyOrientation+Extensions.swift */; };
+		0308301A2393C663008052BE /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030830192393C663008052BE /* ImageView.swift */; };
+		0308301C2393C68D008052BE /* ImageViewUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0308301B2393C68D008052BE /* ImageViewUpdateDelegate.swift */; };
 		B5E0849B22355E120081D49F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0849A22355E120081D49F /* AppDelegate.swift */; };
 		B5E0849D22355E130081D49F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5E0849C22355E130081D49F /* Assets.xcassets */; };
 		B5E084A022355E130081D49F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5E0849E22355E130081D49F /* MainMenu.xib */; };
-		B5E084AB22355ED70081D49F /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E084AA22355ED70081D49F /* ImageView.swift */; };
+		B5E084AB22355ED70081D49F /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E084AA22355ED70081D49F /* View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		030830172393C3DE008052BE /* CGImagePropertyOrientation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImagePropertyOrientation+Extensions.swift"; sourceTree = "<group>"; };
+		030830192393C663008052BE /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		0308301B2393C68D008052BE /* ImageViewUpdateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewUpdateDelegate.swift; sourceTree = "<group>"; };
 		B5E0849722355E120081D49F /* ImageStream.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageStream.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E0849A22355E120081D49F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5E0849C22355E130081D49F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5E0849F22355E130081D49F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		B5E084A122355E130081D49F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5E084A222355E130081D49F /* ImageStream.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ImageStream.entitlements; sourceTree = "<group>"; };
-		B5E084AA22355ED70081D49F /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		B5E084AA22355ED70081D49F /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +64,10 @@
 				B5E0849E22355E130081D49F /* MainMenu.xib */,
 				B5E084A122355E130081D49F /* Info.plist */,
 				B5E084A222355E130081D49F /* ImageStream.entitlements */,
-				B5E084AA22355ED70081D49F /* ImageView.swift */,
+				B5E084AA22355ED70081D49F /* View.swift */,
+				030830192393C663008052BE /* ImageView.swift */,
+				0308301B2393C68D008052BE /* ImageViewUpdateDelegate.swift */,
+				030830172393C3DE008052BE /* CGImagePropertyOrientation+Extensions.swift */,
 			);
 			path = ImageStream;
 			sourceTree = "<group>";
@@ -95,6 +104,7 @@
 				TargetAttributes = {
 					B5E0849622355E120081D49F = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1120;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 0;
@@ -138,7 +148,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5E084AB22355ED70081D49F /* ImageView.swift in Sources */,
+				0308301A2393C663008052BE /* ImageView.swift in Sources */,
+				0308301C2393C68D008052BE /* ImageViewUpdateDelegate.swift in Sources */,
+				030830182393C3DE008052BE /* CGImagePropertyOrientation+Extensions.swift in Sources */,
+				B5E084AB22355ED70081D49F /* View.swift in Sources */,
 				B5E0849B22355E120081D49F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,7 +299,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.joshgrant.ImageStream;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -304,7 +317,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.joshgrant.ImageStream;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
