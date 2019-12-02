@@ -20,6 +20,61 @@ struct FacialImage {
     }
 }
 
+/*
+ 
+ We have a rectangle with another inside. Each set of rectangles has 8 points
+ 
+ o = outer
+ t = top
+ b = bottom
+ l = left
+ r = right
+ 
+ otl
+ otr
+ obl
+ obr
+ 
+ itl
+ itr
+ ibl
+ ibr
+ 
+ We want to first scale the image and then move it such that itl, itr, ibl, and ibr are the same for all images
+ How do we do this?
+ 
+ Calculate the scale factor:
+ 
+ Given the distance between itl and itr, we will make them all have the same distance (1):
+ d = distance
+ dit = (itr - itl)
+ 
+ 1 / 0.18 = 5.55
+ 1 / 0.67 = 1.49
+ 
+ Thus, the scale factor is 1 / (itr - itl) OR 1 / width of the inner box.
+ 
+ So, we scale the image.
+ 
+ Next, we need to move the images so the center of the outer box is at the center of the screen.
+ 
+ We calculate the center of the scaled image by (x + width / 2, y + height / 2)
+ 
+ We calculate the center of the frame by (frameWidth / 2, frameHeight / 2)
+ 
+ Then, we set the origin of the image to: (frameCenter - scaledImageCenter)
+ 
+ frame: 100, 100
+ frameCenter: 50, 50
+ 
+ face center: 20, 40, (from 100, 100)
+ frameCenter - faceCenter = 30, 10
+ 
+ Set the origin of the face image to 30, 10
+ 
+ 
+ */
+
 class View : NSView
 {
     // MARK: - Variables
@@ -92,6 +147,7 @@ class View : NSView
                 }
                 
                 self.queue.sync {
+                    
                     tempImages.append(facialImage)
                     group.leave()
                 }
@@ -113,20 +169,65 @@ class View : NSView
         // This is the request...
         let request = VNDetectFaceRectanglesRequest { (request, error) in
             if let error = error {
+                print("Failure 4")
                 completion(nil, error)
                 return
             }
             
             DispatchQueue.main.async {
-                guard let results = request.results as? [VNFaceObservation] else { return }
-                let facialImage = FacialImage(image: image, faces: results)
+                guard let results = request.results as? [VNFaceObservation] else {
+                    print("Failure 3")
+                    completion(nil, nil)
+                    return
+                }
+                
+                // Create the new image
+                guard let size = image.representations.first?.size else {
+                    print("Failure 2")
+                    completion(nil, nil)
+                    return
+                }
+                
+                guard let boundingBox = results.first?.boundingBox else {
+                    print("Failure 1")
+                    completion(nil, nil)
+                    return
+                }
+                
+                let aspectRatio = size.width / size.height
+                let normalAspect = (aspectRatio > 1.0) ? 1.0 : (1 / aspectRatio)
+                let scaleFactor = (1 / boundingBox.width) * 0.5 * normalAspect
+                
+                let newSize = CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor)
+//                let faceImageCenter = CGPoint(x: newSize.width / 2, y: newSize.height / 2)
+//                let faceScale = scaleFactor * size.width
+                let faceImageCenter = CGPoint(x: boundingBox.origin.x * newSize.width + (boundingBox.size.width * newSize.width) / 2,
+                                              y: boundingBox.origin.y * newSize.height + (boundingBox.size.height * newSize.height) / 2)
+                
+                let newImage = NSImage.init(size: size, flipped: false) { (rect) -> Bool in
+                    
+                    let rectCenter = CGPoint(x: rect.width / 2, y: rect.height / 2)
+                    let distanceCenters = CGPoint(x: rectCenter.x - faceImageCenter.x,
+                                                  y: rectCenter.y - faceImageCenter.y)
+                    
+                    let drawRect = CGRect(origin: distanceCenters, size: newSize)
+                    
+                    image.draw(in: drawRect)
+                    return true
+                }
+                
+                let facialImage = FacialImage(image: newImage, faces: results)
                 completion(facialImage, nil)
                 return
             }
         }
         
         // TODO: Might save a context for faster loading...
-        guard let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else { return }
+        guard let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+            print("Failure 5")
+            completion(nil, nil)
+            return
+        }
         
         let imageRequestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
         
@@ -135,8 +236,25 @@ class View : NSView
                 try imageRequestHandler.perform([request])
             } catch {
                 print("Failed to perform request: \(error)")
+                completion(nil, error)
+                return
             }
         }
+    }
+    
+    func centerOfPoints(_ points: [CGPoint]) -> CGPoint {
+        var totalX: CGFloat = 0
+        var totalY: CGFloat = 0
+        
+        for point in points {
+            totalX += point.x
+            totalY += point.y
+        }
+        
+        let count = points.count
+        
+        return CGPoint(x: totalX / CGFloat(count),
+                       y: totalY / CGFloat(count))
     }
 }
 
@@ -150,7 +268,6 @@ extension View: ImageViewUpdateDelegate
         {
             loopCount = 0
         }
-        
         imageView.image = images[loopCount].image
     }
 }
